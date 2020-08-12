@@ -2,18 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/navigation_home">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/home_dest">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.navigationwithjetpack.ui.MainFragment"
-        android:label="fragment_main"
+        android:id="@+id/home_dest"
+        android:name="com.example.navigationwithjetpack.ui.home_fragment.MainFragment"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_main" />
 
     <fragment
-        android:id="@+id/navigation_list"
-        android:name="com.example.navigationwithjetpack.ui.ListFragment"
-        android:label="fragment_list_list"
-        tools:layout="@layout/fragment_list_list" />
+        android:id="@+id/list_dest"
+        android:name="com.example.navigationwithjetpack.ui.list_fragment.ListFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/params_dest"
+        android:name="com.example.navigationwithjetpack.ui.params_fragment.ParamsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_params" />
 </navigation>

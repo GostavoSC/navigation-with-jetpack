@@ -1,0 +1,27 @@
+
+|
+Lapp/src/main/java/com/example/navigationwithjetpack/ui/dummy/DummyContent.kt,f\e\fe131e23f4a494d18c7362593ecb4f6802dbfbeb
+v
+Fapp/src/main/java/com/example/navigationwithjetpack/ui/MainActivity.kt,9\c\9c8aba3ff2ec5560a4a2327e91629b98024778ed
+R
+"app/src/main/res/values/dimens.xml,c\3\c3c1811dec2dbad2deeafb9aad505ca9631da740
+S
+#app/src/main/res/values/strings.xml,d\2\d2281fbb3027de2722081a53408dd77628bf080e
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+ˆ
+Xapp/src/main/java/com/example/navigationwithjetpack/ui/params_fragment/ParamsFragment.kt,d\d\dd5de343a0722c82c03f0f333da21f08ec378a83
+š
+japp/src/main/java/com/example/navigationwithjetpack/ui/list_fragment/adapters/MyItemRecyclerViewAdapter.kt,0\7\07ea443018718892ee333e8ae0f0bbf8852b520e
+…
+Uapp/src/main/java/com/example/navigationwithjetpack/ui/home_fragment/MainViewModel.kt,e\e\eeb12b4a0e5d45359e7e434303b1937927109df6
+„
+Tapp/src/main/java/com/example/navigationwithjetpack/ui/home_fragment/MainFragment.kt,2\a\2a3074fd00b6542ba8079dd9d6f5f6b76e52444d
+…
+Uapp/src/main/java/com/example/navigationwithjetpack/ui/list_fragment/ListViewModel.kt,9\0\90089fefd83c3f5e89ac13a8ae8962585206014d
+„
+Tapp/src/main/java/com/example/navigationwithjetpack/ui/list_fragment/ListFragment.kt,5\5\557caac7bf99473218b8dec6bb8c3903bad43312
+t
+Dapp/src/main/java/com/example/navigationwithjetpack/AsyncTaskUtil.kt,2\8\2842d7650484f6b415425551a021cf13d70036af

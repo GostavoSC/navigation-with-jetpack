@@ -1,4 +1,4 @@
-package com.example.navigationwithjetpack.ui
+package com.example.navigationwithjetpack.ui.list_fragment.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.navigationwithjetpack.R
-import com.example.navigationwithjetpack.ui.dummy.DummyContent.DummyItem
+import com.example.navigationwithjetpack.data.database.entity.Divida
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-    private val values: List<DummyItem>,
+    private val values: List<Divida>,
     val btnlistener: BtnClickListener
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -30,11 +30,11 @@ class MyItemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         onClick = btnlistener
-        holder.idView.text = item.id
-        holder.itemView.setOnClickListener(View.OnClickListener {
+        holder.idView.text = position.toString()
+        holder.itemView.setOnClickListener {
             onClick.onBtnClick(position)
-        })
-        holder.contentView.text = item.content
+        }
+        holder.contentView.text = item.nameDivida
     }
 
     override fun getItemCount(): Int = values.size
