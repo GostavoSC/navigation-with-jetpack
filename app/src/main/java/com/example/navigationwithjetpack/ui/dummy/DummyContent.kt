@@ -11,18 +11,12 @@ import java.util.*
  */
 object DummyContent {
 
-    var ITEMS: List<Divida> = ArrayList()
-//
-//    fun addItem(item: Divida) {
-//        ITEMS += item
-//    }
-//
-//    fun addAllItem(mutableList: MutableList<Divida>) {
-//        ITEMS.clear()
-//        for (i in mutableList) {
-//            ITEMS.add(i)
-//        }
-//    }
-//
-//
+    var ITEMS: MutableList<Divida> = ArrayList()
+
+    fun addAllItem(list: List<Divida>) {
+        ITEMS.clear()
+        ITEMS.addAll(list)
+    }
+
+
 }

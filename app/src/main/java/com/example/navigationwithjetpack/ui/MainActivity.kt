@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setupBottomNaviagtion()
         supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
 
-
     }
 
     private fun setupBottomNaviagtion() {

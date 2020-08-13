@@ -8,17 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.navigationwithjetpack.R
 import com.example.navigationwithjetpack.data.database.entity.Divida
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
+
 class MyItemRecyclerViewAdapter(
-    private val values: List<Divida>,
-    val btnlistener: BtnClickListener
+    private var values: List<Divida>,
+    val btnlistener: BtnClickListener,
+    val btnOnLonglistener: BtnOnLongClickListener
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     companion object {
         lateinit var onClick: BtnClickListener
+        lateinit var onLongClick: BtnOnLongClickListener
+    }
+
+    fun setValuesFromList(valuesFromList: List<Divida>){
+        values = valuesFromList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,11 +34,19 @@ class MyItemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         onClick = btnlistener
+        onLongClick = btnOnLonglistener
         holder.idView.text = position.toString()
-        holder.itemView.setOnClickListener {
+        holder.idView.setOnClickListener {
             onClick.onBtnClick(position)
         }
         holder.contentView.text = item.nameDivida
+        holder.contentView.setOnClickListener {
+            onClick.onBtnClick(position)
+        }
+        holder.contentView.setOnLongClickListener {
+            onLongClick.onBtnOnLongClick(position).toString().toBoolean()
+        }
+
     }
 
     override fun getItemCount(): Int = values.size
@@ -48,9 +60,11 @@ class MyItemRecyclerViewAdapter(
         }
     }
 
-    open interface BtnClickListener {
+    interface BtnClickListener {
         fun onBtnClick(position: Int)
     }
-
+    interface BtnOnLongClickListener {
+        fun onBtnOnLongClick(position: Int)
+    }
 
 }

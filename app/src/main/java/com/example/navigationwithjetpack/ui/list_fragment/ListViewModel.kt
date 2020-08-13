@@ -40,6 +40,7 @@ class ListViewModel(
         viewModelScope.launch {
             try {
                 repositoryDivida.insertDivida(divida)
+                loadAllDividas()
             } catch (e: java.lang.RuntimeException) {
                 Log.e("Inserir", "Não inseriu")
             }

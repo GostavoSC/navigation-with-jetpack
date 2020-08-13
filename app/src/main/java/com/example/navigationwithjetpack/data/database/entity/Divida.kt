@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(indices = [Index("name_divida","value_divida")])
+@Entity
 data class Divida(
 
     @ColumnInfo(name = "name_divida") val nameDivida: String,
