@@ -7,4 +7,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_list">List</string>
     <string name="parametros">Parâmetros</string>
+    <string name="nome_d_vida">Nome Dívida</string>
+    <string name="valor_d_vida">Valor Dívida</string>
+    <string name="nome_invalido">Nome inválido</string>
+    <string name="cadastro">Cadastro</string>
 </resources>

@@ -35,11 +35,50 @@ class ListViewModel(
         }
     }
 
+    fun verificaSeJaExisteDivida(divida: Divida): Boolean {
+        var existe = false
+        if (listaLiveDta.value != null) {
+            for (i in listaLiveDta.value!!) {
+                if (i.nameDivida.equals(divida.nameDivida) &&
+                    i.valueDivida == divida.valueDivida
+                ) {
+                    existe = true
+                }
+            }
+        }
+        return existe
+    }
+
+    fun updateDivida(newDivida: Divida, divida: Divida) {
+        viewModelScope.launch {
+            try {
+                divida.nameDivida = newDivida.nameDivida
+                divida.valueDivida = newDivida.valueDivida
+                repositoryDivida.updateDivida(divida)
+                loadAllDividas()
+            } catch (e: java.lang.RuntimeException) {
+                Log.e("Update", "Não rolou")
+            }
+        }
+    }
+
+    fun removeDivida(divida: Divida) {
+        viewModelScope.launch {
+            try {
+                repositoryDivida.removeDivida(divida)
+            } catch (e: java.lang.RuntimeException) {
+                Log.e("Delete", "Não rolou")
+            }
+
+        }
+    }
 
     fun insertDivida(divida: Divida) {
         viewModelScope.launch {
             try {
-                repositoryDivida.insertDivida(divida)
+                if (!verificaSeJaExisteDivida(divida)) {
+                    repositoryDivida.insertDivida(divida)
+                }
                 loadAllDividas()
             } catch (e: java.lang.RuntimeException) {
                 Log.e("Inserir", "Não inseriu")

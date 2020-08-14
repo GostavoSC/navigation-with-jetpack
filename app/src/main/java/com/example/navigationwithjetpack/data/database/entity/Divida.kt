@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Divida(
 
-    @ColumnInfo(name = "name_divida") val nameDivida: String,
-    @ColumnInfo(name = "value_divida") val valueDivida: Double
+    @ColumnInfo(name = "name_divida") var nameDivida: String,
+    @ColumnInfo(name = "value_divida") var valueDivida: Double
 ){
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 }

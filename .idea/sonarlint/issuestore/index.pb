@@ -23,5 +23,9 @@ Tapp/src/main/java/com/example/navigationwithjetpack/ui/home_fragment/MainFragme
 Uapp/src/main/java/com/example/navigationwithjetpack/ui/list_fragment/ListViewModel.kt,9\0\90089fefd83c3f5e89ac13a8ae8962585206014d
 „
 Tapp/src/main/java/com/example/navigationwithjetpack/ui/list_fragment/ListFragment.kt,5\5\557caac7bf99473218b8dec6bb8c3903bad43312
-t
-Dapp/src/main/java/com/example/navigationwithjetpack/AsyncTaskUtil.kt,2\8\2842d7650484f6b415425551a021cf13d70036af
+‚
+Rapp/src/main/java/com/example/navigationwithjetpack/data/database/dao/DividaDao.kt,2\3\23d01b7de8fb1ba74ad0d260de6795cd7f32f9d8
+€
+Papp/src/main/java/com/example/navigationwithjetpack/data/database/AppDatabase.kt,0\4\0449198dd4fc35db1c2418ebb983dd08ff43f082
+‚
+Rapp/src/main/java/com/example/navigationwithjetpack/data/database/entity/Divida.kt,1\f\1f91d0dc80e27bc6b2550a414fd5dfb2a91f68de

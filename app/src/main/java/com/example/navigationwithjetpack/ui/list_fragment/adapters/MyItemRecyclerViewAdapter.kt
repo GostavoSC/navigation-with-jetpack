@@ -3,21 +3,24 @@ package com.example.navigationwithjetpack.ui.list_fragment.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.navigationwithjetpack.R
 import com.example.navigationwithjetpack.data.database.entity.Divida
+import kotlinx.android.synthetic.main.fragment_list.view.*
+import org.w3c.dom.Text
 
 
 class MyItemRecyclerViewAdapter(
     private var values: List<Divida>,
     val btnlistener: BtnClickListener,
-    val btnOnLonglistener: BtnOnLongClickListener
+    val btnlistenerDelete: BtnClickListenerDelete
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     companion object {
         lateinit var onClick: BtnClickListener
-        lateinit var onLongClick: BtnOnLongClickListener
+        lateinit var onDeleteClick: BtnClickListenerDelete
     }
 
     fun setValuesFromList(valuesFromList: List<Divida>){
@@ -34,37 +37,35 @@ class MyItemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         onClick = btnlistener
-        onLongClick = btnOnLonglistener
-        holder.idView.text = position.toString()
-        holder.idView.setOnClickListener {
-            onClick.onBtnClick(position)
-        }
+        onDeleteClick = btnlistenerDelete
+        holder.valueDivida.text = item.valueDivida.toString()
         holder.contentView.text = item.nameDivida
+        holder.imageButton.setOnClickListener {
+            onDeleteClick.onBtnClickDelete(values.get(position))
+        }
         holder.contentView.setOnClickListener {
-            onClick.onBtnClick(position)
+            onClick.onBtnClick(values.get(position))
         }
-        holder.contentView.setOnLongClickListener {
-            onLongClick.onBtnOnLongClick(position).toString().toBoolean()
-        }
+
 
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.item_number)
         val contentView: TextView = view.findViewById(R.id.content)
-
+        val imageButton: ImageButton  = view.findViewById(R.id.imageButton2)
+        val valueDivida: TextView = view.findViewById(R.id.textView)
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
     }
 
     interface BtnClickListener {
-        fun onBtnClick(position: Int)
+        fun onBtnClick(divida: Divida)
     }
-    interface BtnOnLongClickListener {
-        fun onBtnOnLongClick(position: Int)
+    interface BtnClickListenerDelete {
+        fun onBtnClickDelete(divida: Divida)
     }
 
 }

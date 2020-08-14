@@ -13,8 +13,6 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ui.list_fragment.ListFragment"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="-16dp"
         tools:listitem="@layout/fragment_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
