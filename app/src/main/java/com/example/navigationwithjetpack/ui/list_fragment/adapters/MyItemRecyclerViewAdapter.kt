@@ -3,13 +3,11 @@ package com.example.navigationwithjetpack.ui.list_fragment.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.navigationwithjetpack.R
 import com.example.navigationwithjetpack.data.database.entity.Divida
-import kotlinx.android.synthetic.main.fragment_list.view.*
-import org.w3c.dom.Text
 
 
 class MyItemRecyclerViewAdapter(
@@ -40,11 +38,11 @@ class MyItemRecyclerViewAdapter(
         onDeleteClick = btnlistenerDelete
         holder.valueDivida.text = item.valueDivida.toString()
         holder.contentView.text = item.nameDivida
-        holder.imageButton.setOnClickListener {
-            onDeleteClick.onBtnClickDelete(values.get(position))
+        holder.btnRemover.setOnClickListener {
+            onDeleteClick.onBtnClickDelete(values[position])
         }
-        holder.contentView.setOnClickListener {
-            onClick.onBtnClick(values.get(position))
+        holder.btnEditar.setOnClickListener {
+            onClick.onBtnClick(values[position])
         }
 
 
@@ -54,8 +52,9 @@ class MyItemRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val contentView: TextView = view.findViewById(R.id.content)
-        val imageButton: ImageButton  = view.findViewById(R.id.imageButton2)
-        val valueDivida: TextView = view.findViewById(R.id.textView)
+        val valueDivida: TextView = view.findViewById(R.id.valueDividaCard)
+        val btnEditar: Button = view.findViewById(R.id.btnEditar)
+        val btnRemover: Button = view.findViewById(R.id.btnRemover)
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }

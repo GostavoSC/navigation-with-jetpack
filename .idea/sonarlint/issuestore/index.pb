@@ -29,3 +29,9 @@ Rapp/src/main/java/com/example/navigationwithjetpack/data/database/dao/DividaDao
 Papp/src/main/java/com/example/navigationwithjetpack/data/database/AppDatabase.kt,0\4\0449198dd4fc35db1c2418ebb983dd08ff43f082
 Ç
 Rapp/src/main/java/com/example/navigationwithjetpack/data/database/entity/Divida.kt,1\f\1f91d0dc80e27bc6b2550a414fd5dfb2a91f68de
+ê
+`app/src/main/java/com/example/navigationwithjetpack/data/repository/divida/DividaHelperIpImpl.kt,0\e\0ea229198cea5ad3617b51ba2f6f97aa8e64be23
+ä
+Zapp/src/main/java/com/example/navigationwithjetpack/data/repository/divida/DividaHelper.kt,b\0\b072f6b975ab9f5fa65b87dde51526d280518133
+{
+Kapp/src/main/java/com/example/navigationwithjetpack/ui/util/DialogCustom.kt,e\5\e559a82892656959b80d447519969b24462b4f97

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.MutableLiveData
 import com.example.navigationwithjetpack.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -28,9 +29,11 @@ open class DialogCustom(
     private val valueInputEditText by lazy { alertDialogView.findViewById(R.id.valueDivida) as TextInputEditText }
     private val valueInputLayout by lazy { alertDialogView.findViewById(R.id.layoutValueDivida) as TextInputLayout }
 
+
     private var currentDialog: AlertDialog? = null
     var onDialogConfirmationListener: OnDialogConfirmationListener? = null
     private var nameTextWatcher: TextWatcher? = null
+
 
     var name: String
         get() = nameInputEditText.text?.toString() ?: ""
@@ -46,22 +49,47 @@ open class DialogCustom(
         currentDialog?.show()
     }
 
+    fun setNameTextChangedListener(newNameTextWatcher: TextWatcher?) {
+        nameTextWatcher?.let {
+            nameInputEditText.removeTextChangedListener(it)
+        }
+
+        newNameTextWatcher?.let {
+            nameInputEditText.addTextChangedListener(it)
+            nameTextWatcher = it
+        }
+    }
+
+    fun setValueTextChangedListener(newNameTextWatcher: TextWatcher?) {
+        nameTextWatcher?.let {
+            valueInputEditText.removeTextChangedListener(it)
+        }
+
+        newNameTextWatcher?.let {
+            valueInputEditText.addTextChangedListener(it)
+            nameTextWatcher = it
+        }
+    }
+
+    fun checkIfDataIsValid(): Boolean {
+        return name.isNotEmpty() && !nameInputLayout.isErrorEnabled && value.isNotEmpty() && !valueInputLayout.isErrorEnabled
+    }
 
     fun setSaveAndCancelButton() {
         builder.apply {
             setPositiveButton("Salvar") { dialog, _ ->
-                val name = nameInputEditText.text.toString()
-                val value = valueInputEditText.text.toString().toDouble()
+                val name: String = nameInputEditText.text.toString()
+                val value: Double = valueInputEditText.text.toString().toDouble()
                 onDialogConfirmationListener?.onConfirmation(
                     name,
                     value
                 )
                 dialog.dismiss()
             }
-
             setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
         }
     }
+
 
 
     fun setPositiveButtonEnabled(isEnabled: Boolean) {
@@ -71,7 +99,14 @@ open class DialogCustom(
     fun setNameError(hasError: Boolean?) {
         hasError?.let {
             nameInputLayout.isErrorEnabled = it
-//            if (it) nameInputLayout.error = ge(R.string.nome_invalido)
+            if (it) nameInputLayout.error = "O nome da dívida não pode ser vazia"
+        }
+    }
+
+    fun setValueError(hasError: Boolean?) {
+        hasError?.let {
+            valueInputLayout.isErrorEnabled = it
+            if (it) valueInputLayout.error = "O valor da dívida não pode ser vazia"
         }
     }
 

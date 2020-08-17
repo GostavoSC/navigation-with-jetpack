@@ -11,4 +11,11 @@
     <string name="valor_d_vida">Valor Dívida</string>
     <string name="nome_invalido">Nome inválido</string>
     <string name="cadastro">Cadastro</string>
+    <string name="jaExiste">Já existe essa dívida lazarento</string>
+    <string name="ok">Ok</string>
+    <string name="removeu">Dívida removida com sucesso</string>
+    <string name="inseriu">Dívida inserida com sucesso</string>
+    <string name="editou">Dívida editada com sucesso</string>
+    <string name="estaVazio">Nome da dívida não deve ser vazia</string>
+    <string name="estaVazioValue">O valor da dívida não deve ser vazia</string>
 </resources>

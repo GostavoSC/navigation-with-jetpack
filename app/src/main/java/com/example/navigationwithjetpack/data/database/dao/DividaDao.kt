@@ -5,9 +5,13 @@ import com.example.navigationwithjetpack.data.database.entity.Divida
 
 @Dao
 interface DividaDao {
+
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT * FROM divida ORDER BY name_divida")
+    @Query("SELECT * FROM divida ORDER BY name_divida ASC")
     suspend fun getAll(): List<Divida>
+
+    @Query("SELECT value_divida FROM divida ORDER BY value_divida ASC")
+    suspend fun getValuesDividas(): List<Double>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Delete

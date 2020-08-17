@@ -2,10 +2,11 @@ package com.example.navigationwithjetpack.ui.list_fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +19,9 @@ import com.example.navigationwithjetpack.ui.list_fragment.adapters.MyItemRecycle
 import com.example.navigationwithjetpack.ui.list_fragment.adapters.MyItemRecyclerViewAdapter.BtnClickListener
 import com.example.navigationwithjetpack.ui.util.DialogCustom
 import com.example.navigationwithjetpack.ui.util.DialogCustom.OnDialogConfirmationListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 
 class ListFragment() : Fragment() {
@@ -61,10 +64,10 @@ class ListFragment() : Fragment() {
                     DummyContent.ITEMS,
                     object : BtnClickListener {
                         override fun onBtnClick(divida: Divida) {
-                           showEditDialog(divida)
+                            showEditDialog(divida)
                         }
                     }
-                ,object : MyItemRecyclerViewAdapter.BtnClickListenerDelete {
+                    , object : MyItemRecyclerViewAdapter.BtnClickListenerDelete {
                         override fun onBtnClickDelete(divida: Divida) {
                             removeDivida(divida)
                         }
@@ -74,8 +77,20 @@ class ListFragment() : Fragment() {
         return view
     }
 
-    fun removeDivida(divida: Divida){
-        viewModel.removeDivida(divida)
+    fun removeDivida(divida: Divida) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Remover")
+            .setMessage("Deseja mesmo remover esta dívida?")
+            .setNegativeButton("Sim") { dialog, which ->
+                viewModel.removeDivida(divida)
+                Snackbar.make(requireView(), getString(R.string.removeu), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.ok)) {
+                    }
+                    .show()
+            }
+            .setPositiveButton("não") { dialog, which ->
+            }
+            .show()
     }
 
     private fun pegaLista() {
@@ -88,11 +103,15 @@ class ListFragment() : Fragment() {
     private fun setupSaveDialog(inflater: LayoutInflater) {
         popupDialog = DialogCustom(inflater, getString(R.string.cadastro))
         popupDialog.setSaveAndCancelButton()
+        observeIfIsAbleToRegister()
+        observeNewProductNameError()
     }
 
     private fun prepareSaveEditDialog() {
         popupDialog.showDialog()
-        popupDialog.setPositiveButtonEnabled(true)
+        popupDialog.setNameTextChangedListener(getProductNameTextWatcher())
+        popupDialog.setValueTextChangedListener(getDividaValueTextWatcher())
+        popupDialog.setPositiveButtonEnabled(popupDialog.checkIfDataIsValid())
     }
 
     private fun showSaveDialog() {
@@ -103,6 +122,7 @@ class ListFragment() : Fragment() {
         popupDialog.onDialogConfirmationListener =
             object : OnDialogConfirmationListener {
                 override fun onConfirmation(name: String, value: Double) {
+
                     saveDivida(
                         name,
                         value
@@ -113,7 +133,18 @@ class ListFragment() : Fragment() {
 
     private fun saveDivida(nameDivida: String, valueDivida: Double) {
         val divida = Divida(nameDivida, valueDivida)
-        viewModel.insertDivida(divida)
+        if (viewModel.verificaSeJaExisteDivida(divida)) {
+            Snackbar.make(requireView(), getString(R.string.jaExiste), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.ok)) {
+                }
+                .show()
+        } else {
+            viewModel.insertDivida(divida)
+            Snackbar.make(requireView(), getString(R.string.inseriu), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.ok)) {
+                }
+                .show()
+        }
     }
 
     private fun onClickFabButtonInserDivida(view: View) {
@@ -141,11 +172,19 @@ class ListFragment() : Fragment() {
     }
 
     private fun editDivida(nameDivida: String, valueDivida: Double, divida: Divida) {
-        val newDivida = Divida(nameDivida,valueDivida)
-        if(viewModel.verificaSeJaExisteDivida(newDivida)){
-            Toast.makeText(context, "Já existe essa divida lazarento", Toast.LENGTH_SHORT).show()
-        }else{
+        val newDivida = Divida(nameDivida, valueDivida)
+        if (viewModel.verificaSeJaExisteDivida(newDivida)) {
+            Snackbar.make(requireView(), getString(R.string.jaExiste), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.ok)) {
+                    // Responds to click on the action
+                }
+                .show()
+        } else {
             viewModel.updateDivida(newDivida, divida)
+            Snackbar.make(requireView(), getString(R.string.editou), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.ok)) {
+                }
+                .show()
         }
     }
 
@@ -163,5 +202,78 @@ class ListFragment() : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    private fun observeIfIsAbleToRegister() {
+        viewModel.getPodeCadastrar()?.observe(requireActivity(), Observer {
+            popupDialog.setPositiveButtonEnabled(popupDialog.checkIfDataIsValid())
+        })
+        viewModel.podeCadastrarValue.observe(requireActivity(), Observer {
+            popupDialog.setPositiveButtonEnabled(popupDialog.checkIfDataIsValid())
+        })
+    }
+    private fun observeNewProductNameError() {
+        viewModel.getErroDivida()?.observe(requireActivity(), Observer{ hasError ->
+            popupDialog.setNameError(hasError)
+            popupDialog.setPositiveButtonEnabled(popupDialog.checkIfDataIsValid())
+        })
+
+        viewModel.getErroDividaValue()?.observe(requireActivity(), Observer {
+            popupDialog.setValueError(it)
+            popupDialog.setPositiveButtonEnabled(popupDialog.checkIfDataIsValid())
+        })
+    }
+
+    private fun getProductNameTextWatcher(): TextWatcher? {
+        return object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // Unused method
+            }
+
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                // Unused method
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val dividaName = s.toString()
+                viewModel.verificarNomeDaDivida(dividaName)
+            }
+        }
+    }
+    private fun getDividaValueTextWatcher(): TextWatcher? {
+        return object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // Unused method
+            }
+
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                // Unused method
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val dividaName = s.toString()
+                viewModel.verificarValorDivida(dividaName)
+            }
+        }
     }
 }
