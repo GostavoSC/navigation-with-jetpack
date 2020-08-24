@@ -5,33 +5,37 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.navigationwithjetpack.data.database.AppDatabase
 import com.example.navigationwithjetpack.data.repository.divida.DividaHelperImpl
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(val context: Context) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-     var valorFinal: MutableLiveData<Double> = MutableLiveData()
 
-    private var repositoryDivida: DividaHelperImpl =
-        DividaHelperImpl(
-            context
+    var valorFinal: MutableLiveData<Double> = MutableLiveData()
+
+    private lateinit var repositoryDivida: DividaHelperImpl
+
+    fun inicaRepository(context: Context) {
+        val db = AppDatabase.DatabaseBuilder.getInstance(context)
+        repositoryDivida = DividaHelperImpl(
+            db
         )
+    }
 
     fun getValues() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-               calculaValorDeDividas(repositoryDivida.getValuesDividas())
+                calculaValorDeDividas(repositoryDivida.getValuesDividas())
             } catch (e: RuntimeException) {
                 Log.e("Valores", "Não rolou")
             }
         }
     }
 
-    fun calculaValorDaCarteira(valueCarteira: Double, valuesDividas: Double) : Double{
-        return valueCarteira-valuesDividas
-    }
 
-    private fun calculaValorDeDividas(list: List<Double>) {
+    fun calculaValorDeDividas(list: List<Double>) {
         var soma = 0.0
         for (i in list) {
             soma += i

@@ -5,8 +5,6 @@ v
 Fapp/src/main/java/com/example/navigationwithjetpack/ui/MainActivity.kt,9\c\9c8aba3ff2ec5560a4a2327e91629b98024778ed
 R
 "app/src/main/res/values/dimens.xml,c\3\c3c1811dec2dbad2deeafb9aad505ca9631da740
-S
-#app/src/main/res/values/strings.xml,d\2\d2281fbb3027de2722081a53408dd77628bf080e
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 @
@@ -29,9 +27,15 @@ Rapp/src/main/java/com/example/navigationwithjetpack/data/database/dao/DividaDao
 Papp/src/main/java/com/example/navigationwithjetpack/data/database/AppDatabase.kt,0\4\0449198dd4fc35db1c2418ebb983dd08ff43f082
 Ç
 Rapp/src/main/java/com/example/navigationwithjetpack/data/database/entity/Divida.kt,1\f\1f91d0dc80e27bc6b2550a414fd5dfb2a91f68de
-ê
-`app/src/main/java/com/example/navigationwithjetpack/data/repository/divida/DividaHelperIpImpl.kt,0\e\0ea229198cea5ad3617b51ba2f6f97aa8e64be23
 ä
 Zapp/src/main/java/com/example/navigationwithjetpack/data/repository/divida/DividaHelper.kt,b\0\b072f6b975ab9f5fa65b87dde51526d280518133
 {
 Kapp/src/main/java/com/example/navigationwithjetpack/ui/util/DialogCustom.kt,e\5\e559a82892656959b80d447519969b24462b4f97
+é
+^app/src/main/java/com/example/navigationwithjetpack/data/repository/divida/DividaHelperImpl.kt,6\f\6fa5247cae1c128d71dc8dfcd8a53e5f9a81c0a2
+R
+"app/src/main/res/values/colors.xml,9\6\969faa2a5d9f5e8390e958d2c07f2cfd54676e6b
+Ç
+Rapp/src/test/java/com/example/navigationwithjetpack/viewModel/MainViewModelTest.kt,9\0\901c29b88490193647fc1e7becb8e717f754d684
+Ç
+Rapp/src/test/java/com/example/navigationwithjetpack/viewModel/ListViewModelTest.kt,4\d\4dfe4c161eedae7d89cdcfc25734183171f154bb

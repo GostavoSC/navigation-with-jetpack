@@ -26,12 +26,16 @@ class MainFragment : Fragment() {
     private fun observerValues() {
         viewModel.getValues()
         viewModel.valorFinal.observe(requireActivity(), Observer {
-            valueDividas.text = it.toString()
+            var value = it.toString().replace(".", ",") + "0"
+            valueDividas.text = value
+            value = (carteira.text.toString().toDouble() - it).toString().replace(".", ",") + "0"
+            sobramValue.text = value
         })
     }
 
     private fun setupViewModel() {
-        viewModel = MainViewModel(requireContext())
+        viewModel = MainViewModel()
+        viewModel.inicaRepository(requireContext())
     }
 
     companion object {

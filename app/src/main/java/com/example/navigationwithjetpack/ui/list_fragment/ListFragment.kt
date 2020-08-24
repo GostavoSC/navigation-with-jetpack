@@ -24,15 +24,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 
-class ListFragment() : Fragment() {
+class ListFragment : Fragment() {
 
     private var columnCount = 1
     private lateinit var viewModel: ListViewModel
     private lateinit var popupDialog: DialogCustom
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = ListViewModel(requireContext())
+        viewModel = ListViewModel()
+        viewModel.iniciaRepository(requireContext())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

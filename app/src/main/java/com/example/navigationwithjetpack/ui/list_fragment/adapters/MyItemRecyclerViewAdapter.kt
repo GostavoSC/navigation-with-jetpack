@@ -21,7 +21,7 @@ class MyItemRecyclerViewAdapter(
         lateinit var onDeleteClick: BtnClickListenerDelete
     }
 
-    fun setValuesFromList(valuesFromList: List<Divida>){
+    fun setValuesFromList(valuesFromList: List<Divida>) {
         values = valuesFromList
         notifyDataSetChanged()
     }
@@ -36,7 +36,8 @@ class MyItemRecyclerViewAdapter(
         val item = values[position]
         onClick = btnlistener
         onDeleteClick = btnlistenerDelete
-        holder.valueDivida.text = item.valueDivida.toString()
+        var value = item.valueDivida.toString().replace(".", ",") + "0"
+        holder.valueDivida.text = value
         holder.contentView.text = item.nameDivida
         holder.btnRemover.setOnClickListener {
             onDeleteClick.onBtnClickDelete(values[position])
@@ -55,6 +56,8 @@ class MyItemRecyclerViewAdapter(
         val valueDivida: TextView = view.findViewById(R.id.valueDividaCard)
         val btnEditar: Button = view.findViewById(R.id.btnEditar)
         val btnRemover: Button = view.findViewById(R.id.btnRemover)
+
+        //        val imageView: ImageView = view.findViewById(R.id.save_image_matrix)
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
@@ -63,6 +66,7 @@ class MyItemRecyclerViewAdapter(
     interface BtnClickListener {
         fun onBtnClick(divida: Divida)
     }
+
     interface BtnClickListenerDelete {
         fun onBtnClickDelete(divida: Divida)
     }

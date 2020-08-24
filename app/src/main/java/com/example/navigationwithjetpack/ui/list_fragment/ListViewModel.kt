@@ -6,13 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.navigationwithjetpack.data.database.AppDatabase
 import com.example.navigationwithjetpack.data.database.entity.Divida
 import com.example.navigationwithjetpack.data.repository.divida.DividaHelperImpl
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class ListViewModel(
-    context: Context
 ) : ViewModel() {
 
     var listaLiveDta = MutableLiveData<List<Divida>>()
@@ -20,21 +21,21 @@ class ListViewModel(
     var podeCadastrar = MutableLiveData<Boolean>()
     var erroNameDividaValue = MutableLiveData<Boolean>()
     var podeCadastrarValue = MutableLiveData<Boolean>()
-    private var repositoryDivida: DividaHelperImpl =
-        DividaHelperImpl(
-            context
-        )
+    private lateinit var repositoryDivida: DividaHelperImpl
 
-    init {
+    fun iniciaRepository(context: Context) {
+        val db = AppDatabase.DatabaseBuilder.getInstance(context)
+        repositoryDivida = DividaHelperImpl(db)
         loadAllDividas()
     }
 
-    private fun loadAllDividas() {
-        viewModelScope.launch {
+
+    fun loadAllDividas() {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 listaLiveDta.postValue(repositoryDivida.getAllDividas())
             } catch (e: RuntimeException) {
-                Log.e("Lista", "Não pegou")
+
             }
         }
     }
@@ -54,9 +55,8 @@ class ListViewModel(
     }
 
 
-
     fun updateDivida(newDivida: Divida, divida: Divida) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 divida.nameDivida = newDivida.nameDivida
                 divida.valueDivida = newDivida.valueDivida
@@ -69,7 +69,7 @@ class ListViewModel(
     }
 
     fun removeDivida(divida: Divida) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 repositoryDivida.removeDivida(divida)
                 loadAllDividas()
@@ -79,7 +79,8 @@ class ListViewModel(
 
         }
     }
-    fun verificarNomeDaDivida(nameDivida:String){
+
+    fun verificarNomeDaDivida(nameDivida: String) {
         this.erroNameDivida.value = nameDivida.trim() == "";
         this.podeCadastrar.value = nameDivida.trim() != "";
     }
@@ -87,7 +88,8 @@ class ListViewModel(
     fun getErroDivida(): LiveData<Boolean?>? {
         return erroNameDivida
     }
-    fun verificarValorDivida(nameDivida:String){
+
+    fun verificarValorDivida(nameDivida: String) {
         this.erroNameDividaValue.value = nameDivida.trim() == "";
         this.podeCadastrarValue.value = nameDivida.trim() != "";
     }
@@ -101,7 +103,7 @@ class ListViewModel(
     }
 
     fun insertDivida(divida: Divida) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (!verificaSeJaExisteDivida(divida)) {
                     repositoryDivida.insertDivida(divida)
